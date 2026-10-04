@@ -1,5 +1,5 @@
 /*
- * Minimal x64 UEFI application that prints "welcome".
+ * Minimal UEFI application for x64 and AArch64 that prints "welcome".
  *
  * Self-contained: defines only the slice of the UEFI spec it needs, so no
  * gnu-efi or EDK II headers are required.
@@ -14,7 +14,12 @@ typedef uint16_t CHAR16;
 typedef uint64_t UINTN;
 
 #define EFI_SUCCESS 0
+/* x64 UEFI uses the Microsoft calling convention; AArch64 uses the standard one. */
+#if defined(__x86_64__)
 #define EFIAPI __attribute__((ms_abi))
+#else
+#define EFIAPI
+#endif
 
 typedef struct {
     uint64_t Signature;
