@@ -24,7 +24,8 @@ make run
 ```
 
 `make run` copies the image to `esp/EFI/BOOT/BOOTX64.EFI`, the removable-media
-boot path, so the firmware boots it automatically. Override the firmware path
+boot path, so the firmware boots it automatically. The program prints
+`welcome` and waits for a key press, then returns to the firmware. Override the firmware path
 with `make run OVMF=/path/to/OVMF_CODE.fd` if yours is elsewhere.
 
 To boot on real hardware, copy `BOOTX64.EFI` to `EFI/BOOT/` on a FAT32 USB
@@ -56,8 +57,10 @@ the x86-64 CPU in software, so boot takes a few seconds longer.
    make run OVMF="$(brew --prefix qemu)/share/qemu/edk2-x86_64-code.fd"
    ```
 
-   A QEMU window opens and `welcome` appears after the firmware starts the
-   program. The firmware then opens its setup menu; close the window to quit.
+   A QEMU window opens and, after a few seconds of firmware startup, shows
+   `welcome` and `Press any key to exit.` Click inside the window so it has
+   keyboard focus before pressing a key. When the program exits, the firmware
+   opens its setup menu; close the window to quit.
 
    To see the output in your terminal instead of a window, add `-nographic` to
    the `qemu-system-x86_64` line in the `Makefile`, or run QEMU directly:
